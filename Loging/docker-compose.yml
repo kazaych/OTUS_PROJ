@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  fluent-bit:
+    container_name: fluent-bit
+    image: fluent/fluent-bit
+    ports:
+      - 24224:24224
+      - 24224:24224/udp
+    volumes:
+      - ./fluent-bit/:/fluent-bit/etc/
+    deploy: 
+      placement:
+        constraints:
+          - node.hostname==ATVVO
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.17.3
+    environment:
+      - "discovery.type=single-node"
+      - ES_JAVA_OPTS=-Xms750m -Xmx750m
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+    deploy: 
+      placement:
+        constraints:
+          - node.hostname==ATVVO
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  kibana:
+    container_name: kibana
+    image: kibana:7.17.3
+    ports:
+      - "5601:5601"
+    deploy: 
+      placement:
+        constraints:
+          - node.hostname==ATVVO
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+ 
+
+ 
