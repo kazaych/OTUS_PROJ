@@ -12,6 +12,9 @@
 - [Второй ](https://github.com/ChurikovAnatolii/OTUS_PROJ/blob/main/Loging/docker-compose.yml) разворачивает систему логирования на основе Fluent-Bit для сбора логов с docker контейнеров , Elasticsearch для хранения и индексации логов, Kibana для отображения логов в нужном формате.
 
 
-Проект разворачивается на трех bare metal серверах c использованием docker swarm в качестве оркестратора в соответсвии со [схемой 1]()
+Проект разворачивается на трех bare metal серверах c использованием docker swarm в качестве оркестратора в соответсвии со c[tvjq]
 
-![Image alt](https://github.com/{username}/{repository}/raw/{branch}/{path}/image.png)
+![Image alt][def]
+
+
+[def]: https://github.com/ChurikovAnatolii/OTUS_PROJ/blob/main/Untitled%20Diagram.jpg
