@@ -59,7 +59,7 @@ docker stack deploy -c Loging/docker-compose.yml project_logs
 ```console
 docker stack deploy -c docker-compose.yml project_DB
 ```
-3. Ждум когда сервисы DB встанут в состояние healthy
+3. Ждем когда сервисы DB встанут в состояние healthy
 ```console
 4s064oszoq1k  project_DB_srv1              replicated  1/1        mysql/mysql-server:latest  *:3301->3306/tcp
 hqpb9547kbg2  project_DB_srv2              replicated  1/1        mysql/mysql-server:latest  *:3302->3306/tcp
