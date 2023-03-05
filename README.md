@@ -14,10 +14,7 @@
 
 Проект разворачивается на трех bare metal серверах c использованием docker swarm в качестве оркестратора в соответствии со cхемой.
 
-![Image alt][def]
-
-
-[def]: https://github.com/ChurikovAnatolii/OTUS_PROJ/blob/main/Untitled Diagram.jpg
+![Image alt](https://github.com/ChurikovAnatolii/OTUS_PROJ/blob/main/Untitled Diagram.jpg)
 
 ## Описание основных сервисов.
 
