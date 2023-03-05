@@ -52,7 +52,6 @@ services:
       - "3303:3306"
     volumes:
       - "dbData_srv3:/var/lib/mysql"
-    restart: always
     deploy: 
       placement:
         constraints:
@@ -85,7 +84,6 @@ services:
         tag: MySQL_router
   wordpress:
     image: wordpress:php8.1-fpm 
-    restart: always
     environment:
       WORDPRESS_DB_HOST: router:6446
       WORDPRESS_DB_USER: root
