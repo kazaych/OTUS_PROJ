@@ -1,22 +1,21 @@
 version: '3.9'
 services:
   fluent-bit:
-    container_name: fluent-bit
     image: fluent/fluent-bit
     ports:
-      - 24224:24224
-      - 24224:24224/udp
+      - "24224:24224"
+      - "24224:24224/udp"
     volumes:
-      - ./fluent-bit/:/fluent-bit/etc/
+      - type: volume
+        source: fluent_conf
+        target: /fluent-bit/etc
+        volume:
+          nocopy: true
     deploy: 
-      placement:
-        constraints:
-          - node.hostname==ATVVO
-      replicas: 1
+      replicas: 3
       restart_policy:
         condition: on-failure
   elasticsearch:
-    container_name: elasticsearch
     image: elasticsearch:7.17.3
     environment:
       - "discovery.type=single-node"
@@ -32,7 +31,6 @@ services:
       restart_policy:
         condition: on-failure
   kibana:
-    container_name: kibana
     image: kibana:7.17.3
     ports:
       - "5601:5601"
@@ -43,6 +41,14 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
- 
 
- 
+volumes:
+  fluent_conf:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: addr=192.168.2.131,nolock,soft,rw
+      device: ":/home/kz/OTUS_PROJ/Loging/fluent-bit"
+
+
+      

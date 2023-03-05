@@ -7,7 +7,7 @@ services:
     image: mysql/mysql-server
     ports:
       - "3301:3306"
-    command: ["mysqld","--server_id=1","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET"]
+    command: ["mysqld","--server_id=1","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET","--persisted-globals-load=ON"]
     volumes:
       - "dbData_srv1:/var/lib/mysql"
     deploy: 
@@ -26,7 +26,7 @@ services:
     env_file:
       - mysql-server.env
     image: mysql/mysql-server
-    command: ["mysqld","--server_id=2","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET"]
+    command: ["mysqld","--server_id=2","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET","--persisted-globals-load=ON"]
     ports:
       - "3302:3306"
     volumes:
@@ -41,13 +41,13 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: 192.168.2.131:24224
+        fluentd-address: 192.168.2.150:24224
         tag: MySQL_srv2
   srv3:
     env_file:
       - mysql-server.env
     image: mysql/mysql-server
-    command: ["mysqld","--server_id=3","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET"]
+    command: ["mysqld","--server_id=3","--gtid_mode=ON","--enforce_gtid_consistency=ON","--log_bin","--log_replica_updates=ON","--master_info_repository=TABLE","--relay_log_info_repository=TABLE","--transaction_write_set_extraction=XXHASH64","--user=mysql","--host-cache-size=0","--skip-name-resolve", "--authentication_policy=mysql_native_password","--binlog_transaction_dependency_tracking=WRITESET","--persisted-globals-load=ON"]
     ports:
       - "3303:3306"
     volumes:
@@ -63,7 +63,7 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: 192.168.2.131:24224
+        fluentd-address: 192.168.2.105:24224
         tag: MySQL_srv3
   router:
     env_file:
@@ -81,7 +81,7 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: 192.168.2.131:24224
         tag: MySQL_router
   wordpress:
     image: wordpress:php8.1-fpm 
@@ -105,7 +105,7 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: 192.168.2.131:24224
         tag: wordpress
   nginx:
     image: kazaych/nginx_wp:1.2
@@ -113,7 +113,7 @@ services:
       - 8022:80
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - data_html:/var/www/html
+      - "data_html:/var/www/html"
     deploy: 
       placement:
         constraints:
@@ -124,7 +124,7 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: 192.168.2.131:24224
         tag: "nginx"
 
 volumes:
@@ -132,6 +132,9 @@ volumes:
   dbData_srv2:
   dbData_srv3:
   data_html:
+
+      
+      
     
       
     
