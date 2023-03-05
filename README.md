@@ -43,28 +43,28 @@
 Запуск проекта осуществляется в следующем порядке:
 
 0. После того как создали docker swarm и добавили две worker ноды.
-console
+```console
 OTUS_PROJ git:(main)  docker node ls
 ID                            HOSTNAME  STATUS    AVAILABILITY  MANAGER STATUS  ENGINE VERSION
 rvyyfvtcueu00c4y98oxmawwu *  ATVVO      Ready    Active        Leader          20.10.22
 y0fixekayhmr9mra8zsmgv2t6    srv1      Ready    Active                          23.0.1
 x6u1sz0slk27qnzwu1yyrchvc    srv2      Ready    Active                          23.0.1
-
+```
 
 1. С хоста ATVVO запустить docker-compose из папки logging командой
-console
+```console
 docker stack deploy -c Loging/docker-compose.yml project_logs
-
+```
 2. Запустить docker compose из корневого каталога
-console
+```console
 docker stack deploy -c docker-compose.yml project_DB
-
+```
 3. Ждум когда сервисы DB встанут в состояние healthy
-console
+```console
 4s064oszoq1k  project_DB_srv1              replicated  1/1        mysql/mysql-server:latest  *:3301->3306/tcp
 hqpb9547kbg2  project_DB_srv2              replicated  1/1        mysql/mysql-server:latest  *:3302->3306/tcp
 3hm6s56cmcra  project_DB_srv3              replicated  1/1        mysql/mysql-server:latest  *:3303->3306/tcp
-
+```
 4. Запускаем ./cluster_setup.sh, ждем окончания создания кластера.
 
 5. Wordpress доступен по адресу 192.168.2.131:8022, Kibana по адресу 192.168.2.131:5601
